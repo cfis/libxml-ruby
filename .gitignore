@@ -1,2 +1,5 @@
 nbproject
+# Ignore RVM project settings
 .rvmrc
+# Ignore RubyMine project files
+.idea
