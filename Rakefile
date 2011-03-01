@@ -27,6 +27,7 @@ FILES = FileList[
   'test/**/*'
 ]
 
+=begin
 # Default GEM Specification
 default_spec = Gem::Specification.new do |spec|
   spec.name = "libxml-ruby"
@@ -64,6 +65,8 @@ default_spec = Gem::Specification.new do |spec|
   
   spec.has_rdoc = true
 end
+=end
+default_spec=eval(File.open('libxml-ruby.gemspec').read)
 
 # Rake task to build the default package
 Rake::GemPackageTask.new(default_spec) do |pkg|
