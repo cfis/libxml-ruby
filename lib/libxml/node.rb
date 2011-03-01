@@ -66,7 +66,6 @@ module LibXML
       #
       def content
         encoded_content = self.content_raw
-=begin
         # Check for Ruby 1.9 by looking for :encoding method
         if encoded_content && encoded_content.respond_to?(:encoding)
           begin
@@ -77,7 +76,6 @@ module LibXML
             encoded_content.force_encoding(XML::Encoding.to_s(XML::Encoding::UTF_8))
           end
         end
-=end
         encoded_content
       end
 
