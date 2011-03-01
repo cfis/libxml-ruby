@@ -1,6 +1,6 @@
 # Default GEM Specification
 # ------- Default Package ----------
-FILES = FileList[
+FILES = Rake::FileList[
   'Rakefile',
   'CHANGES',
   'LICENSE',
