@@ -1,23 +1,22 @@
 # Default GEM Specification
 # ------- Default Package ----------
-require 'rake'
 
-FILES = Rake::FileList[
+FILES = [
   'Rakefile',
   'CHANGES',
   'LICENSE',
   'README',
   'setup.rb',
-  'doc/**/*',
-  'ext/libxml/*',
+  Dir['doc/**/*'],
+  Dir['ext/libxml/*'],
   'ext/mingw/Rakefile',
   'ext/mingw/build.rake',
-  'ext/vc/*.sln',
-  'ext/vc/*.vcproj',
-  'lib/**/*',
-  'benchmark/**/*',
-  'test/**/*'
-]
+  Dir['ext/vc/*.sln'],
+  Dir['ext/vc/*.vcproj'],
+  Dir['lib/**/*'],
+  Dir['benchmark/**/*'],
+  Dir['test/**/*']
+].flatten
 
 Gem::Specification.new do |spec|
   spec.name = "libxml-ruby"
