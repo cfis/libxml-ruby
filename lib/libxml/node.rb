@@ -60,6 +60,28 @@ module LibXML
       end
 
       # call-seq:
+      #   node.content -> String
+      #
+      # Obtain this nodes content as a string.
+      #
+      def content
+        encoded_content = self.content_raw
+=begin
+        # Check for Ruby 1.9 by looking for :encoding method
+        if encoded_content && encoded_content.respond_to?(:encoding)
+          begin
+            encoded_content.force_encoding(XML::Encoding.to_s(self.doc.encoding))
+          rescue
+            # Output UTF-8 by default or should it use Encoding.default_external?
+            puts "#{$!}, setting encoding to UTF-8"
+            encoded_content.force_encoding(XML::Encoding.to_s(XML::Encoding::UTF_8))
+          end
+        end
+=end
+        encoded_content
+      end
+
+      # call-seq:
       #   node.find(namespaces=nil) -> XPath::XPathObject
       #
       # Return nodes matching the specified xpath expression.

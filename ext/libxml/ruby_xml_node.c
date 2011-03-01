@@ -313,7 +313,7 @@ static VALUE rxml_node_base_uri_set(VALUE self, VALUE uri)
  *
  * Obtain this node's content as a string.
  */
-static VALUE rxml_node_content_get(VALUE self)
+static VALUE rxml_node_content_raw_get(VALUE self)
 {
   xmlNodePtr xnode;
   xmlChar *content;
@@ -1357,7 +1357,7 @@ void rxml_init_node(void)
   rb_define_method(cXMLNode, "base_uri=", rxml_node_base_uri_set, 1);
   rb_define_method(cXMLNode, "blank?", rxml_node_empty_q, 0);
   rb_define_method(cXMLNode, "copy", rxml_node_copy, 1);
-  rb_define_method(cXMLNode, "content", rxml_node_content_get, 0);
+  rb_define_method(cXMLNode, "content_raw", rxml_node_content_raw_get, 0);
   rb_define_method(cXMLNode, "content=", rxml_node_content_set, 1);
   rb_define_method(cXMLNode, "content_stripped", rxml_node_content_stripped_get, 0);
   rb_define_method(cXMLNode, "debug", rxml_node_debug, 0);

@@ -3,3 +3,5 @@ nbproject
 .rvmrc
 # Ignore RubyMine project files
 .idea
+# Ignoring log files
+*.log
