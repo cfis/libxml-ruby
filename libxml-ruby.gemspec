@@ -1,5 +1,7 @@
 # Default GEM Specification
 # ------- Default Package ----------
+require 'rake'
+
 FILES = Rake::FileList[
   'Rakefile',
   'CHANGES',
