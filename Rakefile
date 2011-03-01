@@ -8,7 +8,7 @@ require 'rake/rdoctask'
 require 'rake/testtask'
 require 'date'
 
-
+=begin
 # ------- Default Package ----------
 FILES = FileList[
   'Rakefile',
@@ -27,7 +27,6 @@ FILES = FileList[
   'test/**/*'
 ]
 
-=begin
 # Default GEM Specification
 default_spec = Gem::Specification.new do |spec|
   spec.name = "libxml-ruby"
