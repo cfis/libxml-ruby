@@ -192,8 +192,14 @@ static void start_element_ns_callback(void *ctx,
 					                            int nb_attributes, int nb_defaulted, const xmlChar **xattributes)
 {
   VALUE handler = (VALUE) ctx;
-  VALUE attributes = rb_hash_new();
-  VALUE namespaces = rb_hash_new();
+  VALUE attributes = rb_ary_new2((long)nb_attributes);
+  VALUE namespaces = rb_ary_new2((long)nb_namespaces);
+
+  /* Keys for the values in namespace and attribute Hash */
+  VALUE localname_key = ID2SYM(rb_intern("localname"));
+  VALUE prefix_key = ID2SYM(rb_intern("prefix"));
+  VALUE value_key = ID2SYM(rb_intern("value"));
+  VALUE uri_key = ID2SYM(rb_intern("uri"));
 
   if (handler == Qnil)
     return;
@@ -204,12 +210,20 @@ static void start_element_ns_callback(void *ctx,
     int i;
     for (i = 0;i < nb_attributes * 5; i+=5) 
     {
-      VALUE attrName = rb_str_new2(xattributes[i+0]);
+      VALUE attrLocalname = rb_str_new2(xattributes[i+0]);
       VALUE attrValue = rb_str_new(xattributes[i+3], xattributes[i+4] - xattributes[i+3]);
-      /* VALUE attrPrefix = xattributes[i+1] ? rb_str_new2(xattributes[i+1]) : Qnil;
-         VALUE attrURI = xattributes[i+2] ? rb_str_new2(xattributes[i+2]) : Qnil; */
+      VALUE attrPrefix = xattributes[i+1] ? rb_str_new2(xattributes[i+1]) : Qnil;
+      VALUE attrURI = xattributes[i+2] ? rb_str_new2(xattributes[i+2]) : Qnil;
 
-      rb_hash_aset(attributes, attrName, attrValue);
+      /* Store attribute information in a Hash */
+	  VALUE attribute = rb_hash_new();
+	  rb_hash_aset(attribute, localname_key, attrLocalname);
+	  rb_hash_aset(attribute, prefix_key, attrPrefix);
+	  rb_hash_aset(attribute, value_key, attrValue);
+	  rb_hash_aset(attribute, uri_key, attrURI);
+	
+	  /* Add attribute to Array of attributes */
+	  rb_ary_push(attributes, attribute);
     }
   }
 
@@ -220,7 +234,14 @@ static void start_element_ns_callback(void *ctx,
     {
       VALUE nsPrefix = xnamespaces[i+0] ? rb_str_new2(xnamespaces[i+0]) : Qnil;
       VALUE nsURI = xnamespaces[i+1] ? rb_str_new2(xnamespaces[i+1]) : Qnil;
-      rb_hash_aset(namespaces, nsPrefix, nsURI);
+
+      /* Store namespace information in a Hash */
+	  VALUE namespace = rb_hash_new();
+      rb_hash_aset(namespace, prefix_key, nsPrefix);
+	  rb_hash_aset(namespace, uri_key, nsURI);
+	
+	  /* Add namespace to Array of namespaces */
+	  rb_ary_push(namespaces, namespace);
     }
   }
 
